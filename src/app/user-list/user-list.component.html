@@ -1,0 +1,51 @@
+<div class="header">
+
+  <md-form-field floatPlaceholder="never">
+    <input mdInput #filter placeholder="Filter clients">
+  </md-form-field>
+
+  <md-select (change)="onGenderChange($event)" placeholder="select gender" [(ngModel)]="selectedGender">
+    <md-option *ngFor="let gender of genderList" [value]="gender.value">
+      {{gender.value | uppercase}}
+    </md-option>
+  </md-select>
+
+</div>
+
+<md-table #table [dataSource]="dataSource">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <ng-container mdColumnDef="name">
+    <md-header-cell *mdHeaderCellDef> Name</md-header-cell>
+    <md-cell *mdCellDef="let element"> {{element.name}}</md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="phone">
+    <md-header-cell *mdHeaderCellDef> Phone</md-header-cell>
+    <md-cell *mdCellDef="let element"> {{element.phone}}</md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="email">
+    <md-header-cell *mdHeaderCellDef> Email</md-header-cell>
+    <md-cell *mdCellDef="let element"> {{element.email}}</md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="birth">
+    <md-header-cell *mdHeaderCellDef> Birth</md-header-cell>
+    <md-cell *mdCellDef="let element">
+      {{element.birthMonth || '?'}}/
+      {{element.birthDay || '?'}}/
+      {{element.birthYear || '?'}}
+    </md-cell>
+  </ng-container>
+
+  <ng-container mdColumnDef="address">
+    <md-header-cell *mdHeaderCellDef> Address</md-header-cell>
+    <md-cell *mdCellDef="let element"> {{element.address}}</md-cell>
+  </ng-container>
+
+  <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+  <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+</md-table>

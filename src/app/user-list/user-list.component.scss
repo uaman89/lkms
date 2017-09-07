@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  flex: 1 1 auto;
+  align-content: flex-end;
+
+  md-form-field {
+    margin: auto;
+    flex-grow: 2;
+    padding: 0 1em;
+  }
+
+}
