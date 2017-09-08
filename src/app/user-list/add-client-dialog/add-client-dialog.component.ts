@@ -1,5 +1,5 @@
-import {MdDialogRef} from '@angular/material';
-import {Component, OnInit} from '@angular/core';
+import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {genderList} from '../../constants';
 
@@ -14,11 +14,14 @@ export class AddClientDialogComponent implements OnInit {
 
   public formControls: any;
   public genderList: any[] = genderList;
+  public title:string;
 
-  constructor(public dialogRef: MdDialogRef<AddClientDialogComponent>) {
+  constructor(public dialogRef: MdDialogRef<AddClientDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit() {
+
+    this.title = this.data.dialogTitle;
 
     this.formControls = new FormGroup({
       'name': new FormControl('', [

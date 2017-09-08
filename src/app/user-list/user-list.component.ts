@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {ApiService} from '../services/api.service';
 import {Observable} from 'rxjs/Observable';
 import {DataSource} from '@angular/cdk/collections';
@@ -9,7 +9,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
-import {MdDialog} from '@angular/material';
+import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {AddClientDialogComponent} from './add-client-dialog/add-client-dialog.component';
 import {genderList} from '../constants';
 
@@ -59,7 +59,7 @@ export class UserListComponent implements OnInit {
   public openDialog(): void {
     const dialogRef = this.dialog.open(AddClientDialogComponent, {
       // width: '250px',
-      // data: {genderList: this.genderList}
+       data: {dialogTitle: 'Add new client'}
     });
 
     dialogRef.afterClosed().subscribe(result => {
