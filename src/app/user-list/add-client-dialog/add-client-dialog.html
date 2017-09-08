@@ -1,22 +1,66 @@
 <h1 md-dialog-title>Add new Client</h1>
 <div md-dialog-content>
-  <form>
+
+  <form [formGroup]="formControls" class="client-data-form">
 
     <md-form-field>
-      <input mdInput [formControl]="formControls.name" placeholder="Name" tabindex="1">
-      <md-error *ngIf="formControls.name.hasError('required')">
+      <input mdInput formControlName="name" placeholder="Name" tabindex="1" required>
+      <md-error *ngIf="formControls.hasError('required', ['name'])">
         Name is required
       </md-error>
-      <md-error *ngIf="formControls.name.hasError('minLength')">
+      <md-error *ngIf="formControls.hasError('minlength', ['name'])">
         Name should be at least 4 characters length
+      </md-error>
+    </md-form-field>
+
+
+    <md-form-field>
+      <input mdInput formControlName="phone" placeholder="Phone" tabindex="2">
+      <md-error *ngIf="formControls.hasError('pattern', ['phone'])">
+        Invalid phone
+      </md-error>
+    </md-form-field>
+
+
+    <md-form-field>
+      <input type="email" mdInput formControlName="email" placeholder="email" tabindex="3">
+      <md-error *ngIf="formControls.hasError('pattern', ['email'])">
+        Invalid email
+      </md-error>
+    </md-form-field>
+
+
+    <md-form-field>
+      <input mdInput formControlName="birthDate" [mdDatepicker]="picker" placeholder="Choose a birth date"
+             tabindex="4">
+      <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+      <md-datepicker #picker></md-datepicker>
+      <md-error *ngIf="formControls.hasError('pattern', ['birthDate'])">
+        Invalid date
+      </md-error>
+    </md-form-field>
+
+    <md-select placeholder="select gender" tabindex="5">
+      <md-option> Unknown </md-option>
+      <md-option *ngFor="let g of genderList" [value]="g.value">
+        {{g.value}}
+      </md-option>
+    </md-select>
+
+    <md-form-field>
+      <input mdInput formControlName="address" placeholder="address" tabindex="5">
+      <md-error *ngIf="formControls.hasError('pattern', ['address'])">
+        Invalid address
       </md-error>
     </md-form-field>
 
 
   </form>
 </div>
-<button (click)="log(addForm.controls)"></button>
+<button (click)="log(formControls.value)"></button>
+
+isValid: {{formControls.valid}}
 <div md-dialog-actions>
-  <button md-button [md-dialog-close]="true" tabindex="2">Ok</button>
-  <button md-button md-dialog-close tabindex="-1">Close</button>
+  <button md-raised-button [md-dialog-close]="formControls.value" color="primary" tabindex="6">Ok</button>
+  <button md-raised-button md-dialog-close color="warn" tabindex="-1">Close</button>
 </div>

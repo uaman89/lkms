@@ -11,7 +11,7 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
 import {MdDialog} from '@angular/material';
 import {AddClientDialogComponent} from './add-client-dialog/add-client-dialog.component';
-
+import {genderList} from '../constants';
 
 @Component({
   selector: 'app-user-list',
@@ -25,11 +25,7 @@ export class UserListComponent implements OnInit {
   @ViewChild('genderSelect') genderSelect: ElementRef;
 
   public dataSource: ExampleDataSource;
-  public genderList: any[] = [
-    {value: ''},
-    {value: 'female'},
-    {value: 'male'}
-  ];
+  public genderList: any[] = genderList;
   public selectedGender: string;
 
   constructor(private api: ApiService, public dialog: MdDialog) {
@@ -62,8 +58,8 @@ export class UserListComponent implements OnInit {
 
   public openDialog(): void {
     const dialogRef = this.dialog.open(AddClientDialogComponent, {
-      width: '250px',
-      data: {genderList: this.genderList}
+      // width: '250px',
+      // data: {genderList: this.genderList}
     });
 
     dialogRef.afterClosed().subscribe(result => {

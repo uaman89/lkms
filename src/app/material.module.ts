@@ -11,7 +11,9 @@ import {
   MdCardModule,
   MdInputModule,
   MdButtonModule,
-  MdDialogModule
+  MdDialogModule,
+  MdDatepickerModule, MdNativeDateModule,
+  MdListModule
 } from '@angular/material';
 
 @NgModule({
@@ -28,7 +30,10 @@ import {
     MdCardModule,
     MdInputModule,
     MdButtonModule,
-    MdDialogModule
+    MdDialogModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
+    MdListModule
   ],
 
   declarations: []
