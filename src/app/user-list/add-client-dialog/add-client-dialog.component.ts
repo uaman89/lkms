@@ -14,7 +14,7 @@ export class AddClientDialogComponent implements OnInit {
 
   public formControls: any;
   public genderList: any[] = genderList;
-  public title:string;
+  public title: string;
 
   constructor(public dialogRef: MdDialogRef<AddClientDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) {
   }
@@ -29,16 +29,23 @@ export class AddClientDialogComponent implements OnInit {
         Validators.minLength(4)
       ]),
       'phone': new FormControl('', [
+        Validators.required,
         Validators.pattern(/[0-9 +\-()]/),
         Validators.minLength(10)
       ]),
-      'email': new FormControl('', [Validators.pattern(EMAIL_REGEX)]),
-      'birthDate': new FormControl(null, [Validators.pattern(/\d{1,2}\/\d{1,2}\/\d{4}/)]),
-      'address': new FormControl('', [
-        Validators.minLength(3),
-        Validators.pattern(/[a-zA-Z0-9 -.,]/),
+      'email': new FormControl('', [
+        Validators.required,
+        Validators.pattern(EMAIL_REGEX)
       ]),
-      'gender': new FormControl('')
+      'birthDate': new FormControl(new Date('3/8/1990'), [
+        validateIsDate,
+        Validators.required
+      ]),
+      'address': new FormControl('', [
+        Validators.required,
+        Validators.minLength(3)
+      ]),
+      'gender': new FormControl('', [Validators.required])
     });
   }
 
@@ -46,4 +53,8 @@ export class AddClientDialogComponent implements OnInit {
     console.log(`form:`, form);
   }
 
+}
+
+function validateIsDate(control: FormControl) {
+  return !(control.value instanceof Date) ? {'notDate': {valid: false}} : null;
 }

@@ -15,7 +15,7 @@
 
 
     <md-form-field>
-      <input mdInput formControlName="phone" placeholder="Phone" tabindex="2">
+      <input mdInput formControlName="phone" placeholder="Phone" tabindex="2" required>
       <md-error *ngIf="formControls.hasError('pattern', ['phone'])">
         Invalid phone
       </md-error>
@@ -23,7 +23,7 @@
 
 
     <md-form-field>
-      <input type="email" mdInput formControlName="email" placeholder="email" tabindex="3">
+      <input type="email" mdInput formControlName="email" placeholder="email" tabindex="3" required>
       <md-error *ngIf="formControls.hasError('pattern', ['email'])">
         Invalid email
       </md-error>
@@ -31,24 +31,26 @@
 
 
     <md-form-field>
-      <input mdInput formControlName="birthDate" [mdDatepicker]="picker" placeholder="Choose a birth date"
-             tabindex="4">
+      <input mdInput formControlName="birthDate"
+             [mdDatepicker]="picker"
+             placeholder="Choose a birth date"
+             tabindex="4" required>
       <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
       <md-datepicker #picker></md-datepicker>
-      <md-error *ngIf="formControls.hasError('pattern', ['birthDate'])">
+      <md-error *ngIf="formControls.hasError('notDate', ['birthDate'])">
         Invalid date
       </md-error>
     </md-form-field>
 
-    <md-select placeholder="select gender" tabindex="5">
-      <md-option> Unknown </md-option>
+    <md-select formControlName="gender" placeholder="select gender" tabindex="5" required>
+      <md-option> Unknown</md-option>
       <md-option *ngFor="let g of genderList" [value]="g.value">
         {{g.value}}
       </md-option>
     </md-select>
 
     <md-form-field>
-      <input mdInput formControlName="address" placeholder="address" tabindex="5">
+      <input mdInput formControlName="address" placeholder="address" tabindex="6" required>
       <md-error *ngIf="formControls.hasError('pattern', ['address'])">
         Invalid address
       </md-error>
@@ -58,7 +60,11 @@
   </form>
 </div>
 
+<button (click)="log(formControls)">LOG</button>
+
 <div md-dialog-actions>
-  <button [disabled]="formControls.invalid" md-raised-button [md-dialog-close]="formControls.value" color="primary" tabindex="6">Ok</button>
+  <button [disabled]="formControls.invalid" md-raised-button [md-dialog-close]="formControls.value" color="primary"
+          tabindex="7">Ok
+  </button>
   <button md-raised-button md-dialog-close color="warn" tabindex="-1">Close</button>
 </div>

@@ -59,15 +59,19 @@ export class UserListComponent implements OnInit {
   public openDialog(): void {
     const dialogRef = this.dialog.open(AddClientDialogComponent, {
       // width: '250px',
-       data: {dialogTitle: 'Add new client'}
+      data: {dialogTitle: 'Add new client'}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed. result: ', result);
+    dialogRef.afterClosed().subscribe(clientData => {
+      console.log('The dialog was closed. result: ', clientData);
+      this.api.addClient(clientData).subscribe(res => {
+        console.log(`post res:`, res);
+      });
     });
   }
 
 }
+
 
 export class ExampleDataSource extends DataSource<any> {
 
