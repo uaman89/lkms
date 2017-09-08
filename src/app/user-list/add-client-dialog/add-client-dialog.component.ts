@@ -7,7 +7,7 @@ const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA
 
 @Component({
   selector: 'app-add-client-dialog',
-  templateUrl: 'add-client-dialog.html',
+  templateUrl: 'add-client-dialog.component.html',
   styleUrls: ['add-client-dialog.component.scss']
 })
 export class AddClientDialogComponent implements OnInit {

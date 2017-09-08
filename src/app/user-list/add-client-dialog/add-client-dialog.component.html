@@ -57,10 +57,8 @@
 
   </form>
 </div>
-<button (click)="log(formControls.value)"></button>
 
-isValid: {{formControls.valid}}
 <div md-dialog-actions>
-  <button md-raised-button [md-dialog-close]="formControls.value" color="primary" tabindex="6">Ok</button>
+  <button [disabled]="formControls.invalid" md-raised-button [md-dialog-close]="formControls.value" color="primary" tabindex="6">Ok</button>
   <button md-raised-button md-dialog-close color="warn" tabindex="-1">Close</button>
 </div>

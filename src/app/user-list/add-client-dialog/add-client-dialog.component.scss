@@ -8,3 +8,7 @@ md-form-field {
   min-width: 320px;
 }
 
+div[md-dialog-actions]{
+  //display: flex;
+  justify-content: space-between;
+}
