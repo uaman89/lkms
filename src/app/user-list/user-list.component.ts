@@ -62,11 +62,13 @@ export class UserListComponent implements OnInit {
       data: {dialogTitle: 'Add new client'}
     });
 
-    dialogRef.afterClosed().subscribe(clientData => {
-      console.log('The dialog was closed. result: ', clientData);
-      this.api.addClient(clientData).subscribe(res => {
-        console.log(`post res:`, res);
-      });
+    dialogRef.afterClosed().subscribe(newClientData => {
+      console.log('The dialog was closed. result: ', newClientData);
+      if (!!newClientData) {
+        this.api.addClient(newClientData).subscribe(res => {
+          console.log(`post res:`, res);
+        });
+      }
     });
   }
 

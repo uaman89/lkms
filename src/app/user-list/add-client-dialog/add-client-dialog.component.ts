@@ -5,6 +5,11 @@ import {genderList} from '../../constants';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
+function validateIsDate(control: FormControl) {
+  return !(control.value instanceof Date) ? {'notDate': {valid: false}} : null;
+}
+
+
 @Component({
   selector: 'app-add-client-dialog',
   templateUrl: 'add-client-dialog.component.html',
@@ -49,12 +54,4 @@ export class AddClientDialogComponent implements OnInit {
     });
   }
 
-  log(form) {
-    console.log(`form:`, form);
-  }
-
-}
-
-function validateIsDate(control: FormControl) {
-  return !(control.value instanceof Date) ? {'notDate': {valid: false}} : null;
 }
