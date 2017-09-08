@@ -9,7 +9,9 @@ import {
   MdToolbarModule,
   MdSelectModule,
   MdCardModule,
-  MdInputModule
+  MdInputModule,
+  MdButtonModule,
+  MdDialogModule
 } from '@angular/material';
 
 @NgModule({
@@ -24,7 +26,9 @@ import {
     MdToolbarModule,
     MdSelectModule,
     MdCardModule,
-    MdInputModule
+    MdInputModule,
+    MdButtonModule,
+    MdDialogModule
   ],
 
   declarations: []

@@ -9,6 +9,9 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
+import {MdDialog} from '@angular/material';
+import {AddClientDialogComponent} from './add-client-dialog/add-client-dialog.component';
+
 
 @Component({
   selector: 'app-user-list',
@@ -29,7 +32,7 @@ export class UserListComponent implements OnInit {
   ];
   public selectedGender: string;
 
-  constructor(private api: ApiService,) {
+  constructor(private api: ApiService, public dialog: MdDialog) {
     this.dataSource = new ExampleDataSource(api);
   }
 
@@ -55,6 +58,17 @@ export class UserListComponent implements OnInit {
     // console.log(`$event:`, event);
     this.dataSource.gender = event.value;
 
+  }
+
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(AddClientDialogComponent, {
+      width: '250px',
+      data: {genderList: this.genderList}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed. result: ', result);
+    });
   }
 
 }

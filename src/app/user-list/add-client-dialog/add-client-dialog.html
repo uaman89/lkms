@@ -1,0 +1,22 @@
+<h1 md-dialog-title>Add new Client</h1>
+<div md-dialog-content>
+  <form>
+
+    <md-form-field>
+      <input mdInput [formControl]="formControls.name" placeholder="Name" tabindex="1">
+      <md-error *ngIf="formControls.name.hasError('required')">
+        Name is required
+      </md-error>
+      <md-error *ngIf="formControls.name.hasError('minLength')">
+        Name should be at least 4 characters length
+      </md-error>
+    </md-form-field>
+
+
+  </form>
+</div>
+<button (click)="log(addForm.controls)"></button>
+<div md-dialog-actions>
+  <button md-button [md-dialog-close]="true" tabindex="2">Ok</button>
+  <button md-button md-dialog-close tabindex="-1">Close</button>
+</div>

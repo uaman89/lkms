@@ -1,26 +1,30 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 
+import {appRoutes} from './app.routes';
+import {ApiService} from './services/api.service';
+
+import {MaterialModule} from './material.module';
 
 import {AppComponent} from './app.component';
 import {UserComponent} from './user/user.component';
 import {UserListComponent} from './user-list/user-list.component';
-import {appRoutes} from './app.routes';
-import {MaterialModule} from './material.module';
-import {ApiService} from './services/api.service';
+import {AddClientDialogComponent} from './user-list/add-client-dialog/add-client-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    UserListComponent
+    UserListComponent,
+    AddClientDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(
       appRoutes,
@@ -28,6 +32,7 @@ import {ApiService} from './services/api.service';
     ),
     MaterialModule
   ],
+  entryComponents: [AddClientDialogComponent],
   providers: [ApiService],
   bootstrap: [AppComponent]
 })

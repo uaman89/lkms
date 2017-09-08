@@ -49,3 +49,5 @@
   <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
   <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
 </md-table>
+
+<button md-fab color="primary" class="add-button" (click)="openDialog()">+</button>
