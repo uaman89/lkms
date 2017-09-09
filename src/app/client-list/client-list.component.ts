@@ -12,6 +12,7 @@ import 'rxjs/add/operator/mergeMap';
 import {MdDialog, MdPaginator} from '@angular/material';
 import {ClientDetailsDialogComponent} from '../client-details-dialog/client-details-dialog.component';
 import {genderList} from '../shared';
+import {isNumber} from 'util';
 
 @Component({
   selector: 'app-user-list',
@@ -63,15 +64,13 @@ export class UserListComponent implements OnInit {
     this.dataSource.name = this.filter.nativeElement.value;
   }
 
-    public onGenderChange(event) {
+  public onGenderChange(event) {
     // console.log(`$event:`, event);
     this.dataSource.gender = event.value;
 
   }
 
-  public
-
-  openDialog(): void {
+  public openDialog(): void {
     const dialogRef = this.dialog.open(ClientDetailsDialogComponent, {
       // width: '250px',
       data: {dialogTitle: 'Add new client'}
@@ -85,6 +84,18 @@ export class UserListComponent implements OnInit {
         });
       }
     });
+  }
+
+  public gotoPage(event) {
+    console.log(`event:`, event);
+    const page = parseInt( event.target.value ) - 1;
+    console.log(`!page || !isNumber(page)`, page, !page , !isNumber(page));
+    if (!page || !isNumber(page)) {
+      return false;
+    } else {
+      this.paginator.pageIndex = page;
+      this.paginator.nextPage();
+    }
   }
 
 }

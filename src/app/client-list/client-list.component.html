@@ -55,7 +55,7 @@
 <div class="bottom-bar">
 
   <md-form-field>
-    <input mdInput placeholder="Go to page" value="1" type="number" min="1" #gotoPage>
+    <input mdInput placeholder="Go to page" value="1" type="number" min="1" (change)="gotoPage($event)">
   </md-form-field>
 
   <md-paginator #paginator
