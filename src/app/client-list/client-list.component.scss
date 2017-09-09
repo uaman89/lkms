@@ -1,7 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  //max-height: 100%;
+  overflow: hidden;
+
+  md-table {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+}
+
 .header {
   display: flex;
-  flex: 1 1 auto;
-  align-content: flex-end;
+  //flex: 1 1 auto;
+  flex-shrink: 0;
 
   md-form-field {
     margin: auto;
@@ -11,22 +26,17 @@
 
 }
 
-.add-button{
+.add-button {
   position: fixed;
   right: 1em;
   bottom: 1em;
 }
 
-.bottom-bar{
+.bottom-bar {
   padding-top: 1em;
-  //position: fixed;
-  //bottom: 0;
-  //width: 100%;
   display: flex;
   justify-content: center;
-  //z-index: 2;
+  flex-shrink: 0;
 }
 
-md-card-footer{
-  text-align: center;
-}
+
