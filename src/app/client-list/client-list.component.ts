@@ -21,7 +21,6 @@ import {genderList} from '../shared';
 export class UserListComponent implements OnInit {
 
 
-
   public dataSource: ExampleDataSource;
   public genderList: any[] = genderList;
   public selectedGender: string;
@@ -47,24 +46,32 @@ export class UserListComponent implements OnInit {
     this.dataSource = new ExampleDataSource(this.api, this.paginator);
 
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
-      .debounceTime(1000)
+      .debounceTime(500)
       .distinctUntilChanged()
-      .subscribe(() => {
+      .subscribe((e: Event) => {
         if (!this.dataSource) {
           return;
         }
-        this.dataSource.name = this.filter.nativeElement.value;
+        console.log(`e:`, e);
+        if (e['keyCode'] === 13) {
+          this.dataSource.name = this.filter.nativeElement.value;
+        }
       });
-
   }
 
-  public onGenderChange(event) {
+  public applyNameFilter() {
+    this.dataSource.name = this.filter.nativeElement.value;
+  }
+
+    public onGenderChange(event) {
     // console.log(`$event:`, event);
     this.dataSource.gender = event.value;
 
   }
 
-  public openDialog(): void {
+  public
+
+  openDialog(): void {
     const dialogRef = this.dialog.open(ClientDetailsDialogComponent, {
       // width: '250px',
       data: {dialogTitle: 'Add new client'}
@@ -110,6 +117,9 @@ export class ExampleDataSource extends DataSource<any> {
   constructor(private api: ApiService, private _paginator: MdPaginator) {
     super();
 
+    // reset paginator to page 0, when new filter applyed
+    Observable.merge(this._nameChange, this._genderChange).subscribe(() => this._paginator.pageIndex = 0);
+
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
@@ -121,12 +131,13 @@ export class ExampleDataSource extends DataSource<any> {
       this._paginator.page
     ];
 
+
     return Observable.merge(...displayDataChanges)
       .debounceTime(300)
       .flatMap(() => {
         console.log(`merge:`);
         const _start = this._paginator.pageIndex * this._paginator.pageSize;
-        const _limit = _start + this._paginator.pageSize;
+        const _limit = this._paginator.pageSize;
         const searchParams = {
           name: this.name,
           _start,
@@ -153,5 +164,8 @@ export class ExampleDataSource extends DataSource<any> {
 
 
   disconnect() {
+    console.log(`disconnect!`);
   }
+
 }
+

@@ -2,6 +2,7 @@
 
   <md-form-field floatPlaceholder="never">
     <input mdInput #filter placeholder="Filter clients">
+    <button md-button mdSuffix (click)="applyNameFilter()"><i class="fa fa-search"></i></button>
   </md-form-field>
 
   <md-select (change)="onGenderChange($event)" placeholder="select gender" [(ngModel)]="selectedGender">
@@ -54,13 +55,13 @@
 <div class="bottom-bar">
 
   <md-form-field>
-    <input mdInput placeholder="Go to page" value="0" #gotoPage>
+    <input mdInput placeholder="Go to page" value="1" type="number" min="1" #gotoPage>
   </md-form-field>
 
   <md-paginator #paginator
                 [length]="clientsTotalCount"
-                [pageIndex]="gotoPage.value"
-                [pageSize]="25"
+                [pageIndex]="gotoPage.value - 1"
+                [pageSize]="10"
                 [pageSizeOptions]="[ 10, 25, 100, 500, 1000]">
   </md-paginator>
 
@@ -70,3 +71,7 @@
 
 </div>
 
+
+<md-card-footer>
+  <small> client's total count is approximate!</small>
+</md-card-footer>
