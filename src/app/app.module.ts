@@ -2,37 +2,33 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
-import {RouterModule} from '@angular/router';
 
-import {appRoutes} from './app.routes';
 import {ApiService} from './services/api.service';
 
 import {MaterialModule} from './material.module';
+import {AppRoutingModule} from './app.routing.module';
 
 import {AppComponent} from './app.component';
-import {UserComponent} from './user/user.component';
-import {UserListComponent} from './user-list/user-list.component';
-import {AddClientDialogComponent} from './user-list/add-client-dialog/add-client-dialog.component';
+import {UserComponent} from 'app/client/client.component';
+import {UserListComponent} from 'app/client-list/client-list.component';
+import {ClientDetailsDialogComponent} from 'app/client-details-dialog/add-client-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     UserListComponent,
-    AddClientDialogComponent
+    ClientDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
-    RouterModule.forRoot(
-      appRoutes,
-      // {enableTracing: true} // <-- debugging purposes only
-    ),
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule,
   ],
-  entryComponents: [AddClientDialogComponent],
+  entryComponents: [ClientDetailsDialogComponent],
   providers: [ApiService],
   bootstrap: [AppComponent]
 })

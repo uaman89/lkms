@@ -1,7 +1,7 @@
 import {MD_DIALOG_DATA, MdDialogRef} from '@angular/material';
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {genderList} from '../../constants';
+import {genderList} from '../constants';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -15,13 +15,13 @@ function validateIsDate(control: FormControl) {
   templateUrl: 'add-client-dialog.component.html',
   styleUrls: ['add-client-dialog.component.scss']
 })
-export class AddClientDialogComponent implements OnInit {
+export class ClientDetailsDialogComponent implements OnInit {
 
   public formControls: any;
   public genderList: any[] = genderList;
   public title: string;
 
-  constructor(public dialogRef: MdDialogRef<AddClientDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MdDialogRef<ClientDetailsDialogComponent>, @Inject(MD_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit() {

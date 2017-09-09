@@ -24,6 +24,9 @@
 
     <md-form-field>
       <input type="email" mdInput formControlName="email" placeholder="email" tabindex="3" required>
+      <md-error *ngIf="formControls.hasError('required', ['email'])">
+        Email is required
+      </md-error>
       <md-error *ngIf="formControls.hasError('pattern', ['email'])">
         Invalid email
       </md-error>

@@ -1,0 +1,17 @@
+md-card-content {
+  flex-direction: column;
+  padding-left: 45px;
+}
+
+.detail-item {
+  font-size: 1.1rem;
+  margin-bottom: .5em;
+
+  label {
+    font-size: .8em;
+  }
+}
+
+.edit-button-wrapper{
+  text-align: right;
+}

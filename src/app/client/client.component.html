@@ -1,0 +1,52 @@
+<md-card>
+  <md-card-header>
+    <div md-card-avatar>
+      <i class="fa fa-2x fa-user-circle-o"></i>
+    </div>
+    <md-card-title>{{client.name}}</md-card-title>
+    <md-card-subtitle>card number: {{client.cardNumber}}</md-card-subtitle>
+  </md-card-header>
+
+
+  <md-card-content>
+
+    <div class="detail-item">
+      <label>
+        <i mdPrefix class="fa fa-phone fa-fw"></i> phone:
+      </label>
+      <span>{{client.phone}}</span>
+    </div>
+
+    <div class="detail-item">
+      <label>
+        <i mdPrefix class="fa fa-email fa-fw">@</i> email:
+      </label>
+      <span>{{client.email}}</span>
+    </div>
+    <!--Имя, телефон, email, дата рождения, адрес-->
+
+    <div class="detail-item">
+      <label>
+        <i mdPrefix class="fa fa-birthday-cake fa-fw"></i> birth:
+      </label>
+      <span>{{client.birthDate}}</span>
+    </div>
+
+    <div class="detail-item">
+      <label>
+        <i mdPrefix class="fa fa-address-card-o fa-fw"></i> address:
+      </label>
+      <span>{{client.address}}</span>
+    </div>
+
+  </md-card-content>
+
+  <div class="edit-button-wrapper">
+    <button md-fab color="primary" class="edit-button" (click)="openDialog()" aria-label="edit client details" title="edit client details">
+      <i class="fa fa- fa-pencil" aria-hidden="true"></i>
+      <md-icon>pencil</md-icon>
+    </button>
+  </div>
+
+</md-card>
+

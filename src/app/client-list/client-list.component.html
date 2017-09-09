@@ -20,7 +20,9 @@
 
   <ng-container mdColumnDef="name">
     <md-header-cell *mdHeaderCellDef> Name</md-header-cell>
-    <md-cell *mdCellDef="let element"> {{element.name}}</md-cell>
+    <md-cell *mdCellDef="let element">
+      <a routerLink="/client/{{element.id}}" href="">{{element.name}}</a>
+    </md-cell>
   </ng-container>
 
   <ng-container mdColumnDef="phone">

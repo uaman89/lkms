@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ApiService} from '../services/api.service';
 import {Observable} from 'rxjs/Observable';
 import {DataSource} from '@angular/cdk/collections';
@@ -9,14 +9,14 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
-import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
-import {AddClientDialogComponent} from './add-client-dialog/add-client-dialog.component';
+import {MdDialog} from '@angular/material';
+import {ClientDetailsDialogComponent} from '../client-details-dialog/add-client-dialog.component';
 import {genderList} from '../constants';
 
 @Component({
   selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  templateUrl: './client-list.component.html',
+  styleUrls: ['./client-list.component.scss']
 })
 export class UserListComponent implements OnInit {
 
@@ -44,10 +44,6 @@ export class UserListComponent implements OnInit {
         this.dataSource.name = this.filter.nativeElement.value;
       });
 
-    // this.api.getClients().subscribe(res => {
-    //   console.log(`res:`, res);
-    // });
-
   }
 
   public onGenderChange(event) {
@@ -57,7 +53,7 @@ export class UserListComponent implements OnInit {
   }
 
   public openDialog(): void {
-    const dialogRef = this.dialog.open(AddClientDialogComponent, {
+    const dialogRef = this.dialog.open(ClientDetailsDialogComponent, {
       // width: '250px',
       data: {dialogTitle: 'Add new client'}
     });
@@ -111,9 +107,8 @@ export class ExampleDataSource extends DataSource<any> {
       .debounceTime(300)
       .flatMap(() => {
         console.log(`merge:`);
-        return this.api.getClients({'name': this.name}).map(res => {
-          console.log(`res:`, res);
-          let clients: any[] = res.json();
+        return this.api.getClients({'name': this.name}).map((clients: any[]) => {
+          console.log(`clients:`, clients);
           if (this.gender !== '' && clients.length) {
             clients = clients.filter(client => client.gender === this.gender);
           }

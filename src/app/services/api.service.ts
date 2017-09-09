@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
+import {isNumber} from 'util';
 
 interface IClientData {
   name: string;
@@ -34,13 +36,24 @@ export class ApiService {
   constructor(private http: Http) {
   }
 
-  public getClients(params = {}) {
+  public getClient(id: number | string): Observable<any[]> {
+
+    if (!id) {
+      return Observable.throw(Error('wrong client id provided!'));
+    }
+
+    const url = `${this.baseUrl}clients/${id}`;
+    return this.http.get(url).map((res): any[] => res.json());
+
+  }
+
+  public getClients(params = {}): Observable<any[]> {
 
     const url = `${this.baseUrl}clients`;
+    // console.log(`getClients url:`, url);
+    // console.log(`params:`, params);
 
-    console.log(`getClients url:`, url);
-    console.log(`params:`, params);
-    return this.http.get(url, {search: params});
+    return this.http.get(url, {search: params}).map((res): any[] => res.json());
   }
 
   public addClient(clientData: IClientData) {
