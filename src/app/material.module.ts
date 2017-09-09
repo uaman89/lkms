@@ -13,7 +13,7 @@ import {
   MdButtonModule,
   MdDialogModule,
   MdDatepickerModule, MdNativeDateModule,
-  MdListModule
+  MdListModule,
 } from '@angular/material';
 
 @NgModule({

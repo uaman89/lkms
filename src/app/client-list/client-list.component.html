@@ -5,7 +5,7 @@
   </md-form-field>
 
   <md-select (change)="onGenderChange($event)" placeholder="select gender" [(ngModel)]="selectedGender">
-    <md-option [value]="''"> All </md-option>
+    <md-option [value]="''"> All</md-option>
     <md-option *ngFor="let gender of genderList" [value]="gender.value">
       {{gender.value | uppercase}}
     </md-option>
@@ -51,4 +51,22 @@
   <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
 </md-table>
 
-<button md-fab color="primary" class="add-button" (click)="openDialog()">+</button>
+<div class="bottom-bar">
+
+  <md-form-field>
+    <input mdInput placeholder="Go to page" value="0" #gotoPage>
+  </md-form-field>
+
+  <md-paginator #paginator
+                [length]="clientsTotalCount"
+                [pageIndex]="gotoPage.value"
+                [pageSize]="25"
+                [pageSizeOptions]="[ 10, 25, 100, 500, 1000]">
+  </md-paginator>
+
+  <button md-fab color="primary" class="add-button" (click)="openDialog()">
+    <i class="fa fa-plus"></i>
+  </button>
+
+</div>
+

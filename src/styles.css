@@ -10,3 +10,11 @@ html, body{
   height: 100%;
   min-width: 320px;
 }
+
+body{
+  background: #eee;
+}
+
+.loading{
+  text-align: center;
+}

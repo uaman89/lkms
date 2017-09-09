@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
-import {isNumber} from 'util';
+import 'rxjs/add/operator/toPromise';
 
 interface IClientData {
   name: string;
@@ -84,5 +84,17 @@ export class ApiService {
     console.log(`body:`, body);
     // return Observable.throw('done');
     return this.http.post(url, body.toString(), {headers});
+  }
+
+  // this is wrong
+
+  public getClientsTotalCount() {
+    const lastKnownLimit = 6400;
+    const toInfinityAndBeyound = 99999;
+    return this.getClients({_start: lastKnownLimit, _limit: toInfinityAndBeyound})
+      .toPromise().then(res => {
+      const count = Object.keys(res).length || 0;
+      return lastKnownLimit + count;
+    });
   }
 }

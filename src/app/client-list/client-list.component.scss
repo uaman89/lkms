@@ -6,7 +6,7 @@
   md-form-field {
     margin: auto;
     flex-grow: 2;
-    padding: 0 1em;
+    padding-right: 1em;
   }
 
 }
@@ -15,5 +15,13 @@
   position: fixed;
   right: 1em;
   bottom: 1em;
-  font-size: 2rem;
+}
+
+.bottom-bar{
+  padding-top: 1em;
+  //position: fixed;
+  //bottom: 0;
+  //width: 100%;
+  display: flex;
+  //z-index: 2;
 }

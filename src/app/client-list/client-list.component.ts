@@ -9,7 +9,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
-import {MdDialog} from '@angular/material';
+import {MdDialog, MdPaginator} from '@angular/material';
 import {ClientDetailsDialogComponent} from '../client-details-dialog/client-details-dialog.component';
 import {genderList} from '../shared';
 
@@ -20,19 +20,31 @@ import {genderList} from '../shared';
 })
 export class UserListComponent implements OnInit {
 
-  displayedColumns = ['name', 'phone', 'email', 'birth', 'address'];
-  @ViewChild('filter') filter: ElementRef;
-  @ViewChild('genderSelect') genderSelect: ElementRef;
+
 
   public dataSource: ExampleDataSource;
   public genderList: any[] = genderList;
   public selectedGender: string;
 
+  public clientsTotalCount = 50;
+  public displayedColumns = ['name', 'phone', 'email', 'birth', 'address'];
+
+  @ViewChild('filter') filter: ElementRef;
+  @ViewChild('genderSelect') genderSelect: ElementRef;
+  @ViewChild(MdPaginator) paginator: MdPaginator;
+
   constructor(private api: ApiService, public dialog: MdDialog) {
-    this.dataSource = new ExampleDataSource(api);
   }
 
   ngOnInit() {
+
+    this.api.getClientsTotalCount().then(count => {
+      this.clientsTotalCount = count;
+      console.log(`count:`, count);
+    });
+
+
+    this.dataSource = new ExampleDataSource(this.api, this.paginator);
 
     Observable.fromEvent(this.filter.nativeElement, 'keyup')
       .debounceTime(1000)
@@ -95,23 +107,45 @@ export class ExampleDataSource extends DataSource<any> {
     this._genderChange.next(newValue);
   }
 
-
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private _paginator: MdPaginator) {
     super();
+
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<any> {
 
-    return Observable.merge(this._nameChange, this._genderChange)
+    const displayDataChanges = [
+      this._nameChange,
+      this._genderChange,
+      this._paginator.page
+    ];
+
+    return Observable.merge(...displayDataChanges)
       .debounceTime(300)
       .flatMap(() => {
         console.log(`merge:`);
-        return this.api.getClients({'name': this.name}).map((clients: any[]) => {
+        const _start = this._paginator.pageIndex * this._paginator.pageSize;
+        const _limit = _start + this._paginator.pageSize;
+        const searchParams = {
+          name: this.name,
+          _start,
+          _limit
+        };
+
+        return this.api.getClients(searchParams).map((clients: any[]) => {
+
           console.log(`clients:`, clients);
+
+          // filter by gender
           if (this.gender !== '' && clients.length) {
-            clients = clients.filter(client => client.gender === this.gender);
+            console.log(`this.gender:`, this.gender);
+            clients = clients.filter(client => {
+              console.log(`client.gender:`, client.gender);
+              return client.gender === this.gender;
+            });
           }
+
           return clients;
         });
       });
