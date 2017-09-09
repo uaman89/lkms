@@ -19,7 +19,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(({data: clientData}) => {
-        // document.querySelector('app-user').innerHTML = JSON.stringify(data);
         console.log(`client:`, clientData);
 
         this.client = {
@@ -28,21 +27,14 @@ export class UserComponent implements OnInit {
           'cardNumber': clientData.cardNumber,
           'gender': clientData.gender,
           'birthMonth': clientData.birthMonth,
-          'birthDay': clientData.birthDa,
+          'birthDay': clientData.birthDay,
           'birthYear': clientData.birthYear,
           'phone': clientData.phone,
           'email': clientData.email,
           'address': clientData.address,
         };
 
-        for (const key in this.client) {
-          if (this.client.hasOwnProperty(key)) {
-            if (!this.client[key]) {
-              this.client[key] = 'Unknown';
-            }
-          }
-        }
-      }
+    }
     );
   }
 
