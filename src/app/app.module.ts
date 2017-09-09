@@ -11,7 +11,7 @@ import {AppRoutingModule} from './app.routing.module';
 import {AppComponent} from './app.component';
 import {UserComponent} from 'app/client/client.component';
 import {UserListComponent} from 'app/client-list/client-list.component';
-import {ClientDetailsDialogComponent} from 'app/client-details-dialog/add-client-dialog.component';
+import {ClientDetailsDialogComponent} from 'app/client-details-dialog/client-details-dialog.component';
 
 @NgModule({
   declarations: [

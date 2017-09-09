@@ -10,8 +10,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
 import {MdDialog} from '@angular/material';
-import {ClientDetailsDialogComponent} from '../client-details-dialog/add-client-dialog.component';
-import {genderList} from '../constants';
+import {ClientDetailsDialogComponent} from '../client-details-dialog/client-details-dialog.component';
+import {genderList} from '../shared';
 
 @Component({
   selector: 'app-user-list',

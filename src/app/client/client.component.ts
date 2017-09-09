@@ -1,21 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ClientDetailsDialogComponent} from '../client-details-dialog/add-client-dialog.component';
 import {MdDialog} from '@angular/material';
-import {ApiService} from '../services/api.service';
-
-interface IClientData {
-  'id': number;
-  'name': string;
-  'cardNumber': number;
-  'gender': string;
-  'birthDay': any;
-  'birthMonth': any;
-  'birthYear': any;
-  'phone': string;
-  'email': string;
-  'address': string;
-}
+import {ApiService} from 'app/services/api.service';
+import {IClientData} from 'app/shared';
+import {ClientDetailsDialogComponent} from 'app/client-details-dialog/client-details-dialog.component';
 
 @Component({
   selector: 'app-user',
@@ -28,7 +16,6 @@ export class UserComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private api: ApiService, public dialog: MdDialog) {
   }
-
 
   ngOnInit() {
     this.route.data.subscribe(({data: clientData}) => {
