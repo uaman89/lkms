@@ -9,6 +9,11 @@
     max-height: 100%;
     overflow: auto;
   }
+
+  > md-progress-bar{
+    position: absolute;
+
+  }
 }
 
 .home-btn{

@@ -3,6 +3,7 @@ import {Http, Headers} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
+import {PageService} from './page.service';
 
 interface IClientData {
   name: string;
@@ -33,7 +34,7 @@ export class ApiService {
 
   private baseUrl = 'http://api.demo.lakmus.org/api/';
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private page: PageService) {
   }
 
   public getClient(id: number | string): Observable<any[]> {
@@ -42,19 +43,29 @@ export class ApiService {
       return Observable.throw(Error('wrong client id provided!'));
     }
 
+    this.page.busyIndicator.onQuery();
+
     const url = `${this.baseUrl}clients/${id}`;
-    return this.http.get(url).map((res): any[] => res.json());
+    return this.http.get(url).map((res): any[] => {
+      this.page.busyIndicator.hide();
+      return res.json();
+    });
 
-  }
+  } // end getClient
 
-  public getClients(params = {}): Observable<any[]> {
+  public getClientList(params = {}): Observable<any[]> {
+
+    this.page.busyIndicator.onQuery();
 
     const url = `${this.baseUrl}clients`;
-    // console.log(`getClients url:`, url);
+    // console.log(`getClientList url:`, url);
     // console.log(`params:`, params);
 
-    return this.http.get(url, {search: params}).map((res): any[] => res.json());
-  }
+    return this.http.get(url, {search: params}).map((res): any[] => {
+      this.page.busyIndicator.hide();
+      return res.json();
+    });
+  } // end getClientList
 
   public addClient(clientData: IClientData) {
 
@@ -84,17 +95,17 @@ export class ApiService {
     console.log(`body:`, body);
     // return Observable.throw('done');
     return this.http.post(url, body.toString(), {headers});
-  }
+  }// end addClient
 
-  // this is wrong
 
+  // this is wrong:
   public getClientsTotalCount() {
-    const lastKnownLimit = 6400;
-    const toInfinityAndBeyound = 99999;
-    return this.getClients({_start: lastKnownLimit, _limit: toInfinityAndBeyound})
+    const lastKnownLimit = 6404;
+    const toInfinityAndBeyond = 99999;
+    return this.getClientList({_start: lastKnownLimit, _limit: toInfinityAndBeyond})
       .toPromise().then(res => {
-      const count = Object.keys(res).length || 0;
-      return lastKnownLimit + count;
-    });
+        const count = Object.keys(res).length || 0;
+        return lastKnownLimit + count;
+      });
   }
 }

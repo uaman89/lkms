@@ -40,7 +40,7 @@ export class UserListComponent implements OnInit {
 
     this.api.getClientsTotalCount().then(count => {
       this.clientsTotalCount = count;
-      console.log(`count:`, count);
+      console.log(`clientsTotalCount:`, count);
     });
 
 
@@ -155,7 +155,7 @@ export class ExampleDataSource extends DataSource<any> {
           _limit
         };
 
-        return this.api.getClients(searchParams).map((clients: any[]) => {
+        return this.api.getClientList(searchParams).map((clients: any[]) => {
 
           console.log(`clients:`, clients);
 

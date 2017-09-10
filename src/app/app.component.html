@@ -3,6 +3,10 @@
   <a routerLink="/client/list" md-button class="home-btn">Home <i class="fa fa-x fa-home"></i></a>
 </md-toolbar>
 
+<md-progress-bar *ngIf="page.busyIndicator.isShow"
+                 [color]="page.busyIndicator.color"
+                 [mode]="page.busyIndicator.mode"></md-progress-bar>
+
 <md-card class="main">
   <router-outlet></router-outlet>
 </md-card>

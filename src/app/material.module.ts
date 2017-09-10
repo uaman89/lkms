@@ -14,6 +14,7 @@ import {
   MdDialogModule,
   MdDatepickerModule, MdNativeDateModule,
   MdListModule,
+  MdProgressBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -33,7 +34,8 @@ import {
     MdDialogModule,
     MdDatepickerModule,
     MdNativeDateModule,
-    MdListModule
+    MdListModule,
+    MdProgressBarModule
   ],
 
   declarations: []

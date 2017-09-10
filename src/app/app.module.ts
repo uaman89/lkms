@@ -12,6 +12,7 @@ import {AppComponent} from './app.component';
 import {UserComponent} from 'app/client/client.component';
 import {UserListComponent} from 'app/client-list/client-list.component';
 import {ClientDetailsDialogComponent} from 'app/client-details-dialog/client-details-dialog.component';
+import {PageService} from './services/page.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {ClientDetailsDialogComponent} from 'app/client-details-dialog/client-det
     AppRoutingModule,
   ],
   entryComponents: [ClientDetailsDialogComponent],
-  providers: [ApiService],
+  providers: [ApiService, PageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
