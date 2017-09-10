@@ -4,7 +4,7 @@
       <i class="fa fa-2x fa-user-circle-o"></i>
     </div>
     <md-card-title>{{client.name}}</md-card-title>
-    <md-card-subtitle>card number: {{client.cardNumber}}</md-card-subtitle>
+    <md-card-subtitle *ngIf="client.cardNumber">card number: {{client.cardNumber}}</md-card-subtitle>
   </md-card-header>
 
 

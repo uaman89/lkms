@@ -19,7 +19,7 @@ class PageBusyIndicator {
 
   constructor() {
     this._mode = 'indeterminate';
-    this._color = 'primary';
+    this._color = 'warn';
     this._isShow = false;
 
   }
