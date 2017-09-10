@@ -79,7 +79,7 @@ export class UserListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(newClientData => {
       console.log('The dialog was closed. result: ', newClientData);
       if (!!newClientData) {
-        this.api.addClient(newClientData).subscribe(res => {
+        this.api.saveClient(newClientData).subscribe(res => {
           console.log(`post res:`, res);
         });
       }
@@ -88,7 +88,7 @@ export class UserListComponent implements OnInit {
 
   public gotoPage(event) {
     console.log(`event:`, event);
-    const page = parseInt( event.target.value ) - 1;
+    const page = parseInt( event.target.value, 10 ) - 1;
     console.log(`!page || !isNumber(page)`, page, !page , !isNumber(page));
     if (!page || !isNumber(page)) {
       return false;

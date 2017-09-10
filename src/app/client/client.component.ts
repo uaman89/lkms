@@ -47,7 +47,7 @@ export class UserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(newClientData => {
       console.log('The dialog was closed. result: ', newClientData);
       if (!!newClientData) {
-        this.api.addClient(newClientData).subscribe(res => {
+        this.api.saveClient(newClientData).subscribe(res => {
           console.log(`post res:`, res);
         });
       }

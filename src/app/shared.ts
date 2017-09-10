@@ -4,13 +4,13 @@ export const genderList: any[] = [
 ];
 
 export interface IClientData {
-  'id': number;
+  'id': number | string;
   'name': string;
-  'cardNumber': number;
+  'cardNumber': number | string;
   'gender': string;
-  'birthDay': any;
-  'birthMonth': any;
-  'birthYear': any;
+  'birthDay': number | string;
+  'birthMonth': number | string;
+  'birthYear': number | string;
   'phone': string;
   'email': string;
   'address': string;

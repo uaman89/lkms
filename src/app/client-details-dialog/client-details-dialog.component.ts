@@ -34,6 +34,7 @@ export class ClientDetailsDialogComponent implements OnInit {
     }
 
     this.formControls = new FormGroup({
+      'id': new FormControl(this.details.id),
       'name': new FormControl(this.details.name, [
         Validators.required,
         Validators.minLength(4)

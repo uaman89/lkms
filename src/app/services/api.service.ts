@@ -67,7 +67,9 @@ export class ApiService {
     });
   } // end getClientList
 
-  public addClient(clientData: IClientData) {
+  public saveClient(clientData: IClientData) {
+
+    this.page.busyIndicator.onProcess();
 
     const url = `${this.baseUrl}clients`;
 
@@ -94,14 +96,20 @@ export class ApiService {
 
     console.log(`body:`, body);
     // return Observable.throw('done');
-    return this.http.post(url, body.toString(), {headers});
-  }// end addClient
+    this.page.busyIndicator.onQuery();
+    return this.http.post(url, body.toString(), {headers}).map( (res) => {
+      this.page.busyIndicator.hide();
+      return res;
+    });
+  }// end saveClient
+
+
 
 
   // this is wrong:
   public getClientsTotalCount() {
     const lastKnownLimit = 6404;
-    const toInfinityAndBeyond = 99999;
+    const toInfinityAndBeyond = 9999;
     return this.getClientList({_start: lastKnownLimit, _limit: toInfinityAndBeyond})
       .toPromise().then(res => {
         const count = Object.keys(res).length || 0;
