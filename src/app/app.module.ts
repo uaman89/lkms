@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
@@ -13,6 +13,7 @@ import {UserComponent} from 'app/client/client.component';
 import {UserListComponent} from 'app/client-list/client-list.component';
 import {ClientDetailsDialogComponent} from 'app/client-details-dialog/client-details-dialog.component';
 import {PageService} from './services/page.service';
+import {GlobalErrorHandler} from './global-error-handler';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,14 @@ import {PageService} from './services/page.service';
     AppRoutingModule,
   ],
   entryComponents: [ClientDetailsDialogComponent],
-  providers: [ApiService, PageService],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    },
+    PageService,
+    ApiService,
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
