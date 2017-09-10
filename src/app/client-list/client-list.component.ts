@@ -8,12 +8,12 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/merge';
-import 'rxjs/add/operator/mergeMap';
 import {MdDialog, MdPaginator} from '@angular/material';
 import {ClientDetailsDialogComponent} from '../client-details-dialog/client-details-dialog.component';
-import {genderList, IClientData} from '../shared';
-import {isNumber} from 'util';
+import {genderList} from '../shared';
 import {PageService} from '../services/page.service';
+import 'rxjs/add/operator/mergeMap';
+import {isNumber} from 'util';
 
 @Component({
   selector: 'app-user-list',
@@ -39,13 +39,13 @@ export class UserListComponent implements OnInit {
 
   ngOnInit() {
 
-    this.api.getClientsTotalCount().then(count => {
-      // stupid hack to prevent stupid error msg
-      setTimeout(() => {
+    // stupid hack to prevent stupid error msg
+    setTimeout(() => {
+      this.api.getClientsTotalCount().then(count => {
         this.clientsTotalCount = count;
         console.log(`clientsTotalCount:`, count);
-      }, 1);
-    });
+      });
+    }, 1);
 
 
     this.dataSource = new ExampleDataSource(this.api, this.paginator);
@@ -69,9 +69,7 @@ export class UserListComponent implements OnInit {
   }
 
   public onGenderChange(event) {
-    // console.log(`$event:`, event);
     this.dataSource.gender = event.value;
-
   }
 
   public openDialog(): void {
@@ -83,10 +81,10 @@ export class UserListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(newClientData => {
       console.log('The dialog was closed. result: ', newClientData);
       if (!!newClientData) {
-        this.api.saveClient(<IClientData>{}).subscribe(
+        this.api.saveClient(newClientData).subscribe(
           res => {
             console.log(`post res:`, res);
-            this.page.snackBar('New client created!', 'OK', 3000);
+            this.page.showInfo('New client created!');
           },
           error => {
             this.page.error(`Can't create client :(`);

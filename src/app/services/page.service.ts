@@ -48,13 +48,13 @@ export class PageService {
   constructor(private _snackBar: MdSnackBar) {
   }
 
-  public snackBar(message, action?, duration?) {
-    const params = duration ? {duration} : null;
-    this._snackBar.open(message, action, params);
+  public showInfo(message) {
+    this._snackBar.open(message, 'ok', {duration: 3000});
   }
 
   public error(message) {
     this.busyIndicator.hide();
-    this.snackBar(message, 'cancel');
+    this._snackBar.open(message, 'cancel');
+
   }
 }

@@ -4,6 +4,7 @@ import {MdDialog} from '@angular/material';
 import {ApiService} from 'app/services/api.service';
 import {IClientData} from 'app/shared';
 import {ClientDetailsDialogComponent} from 'app/client-details-dialog/client-details-dialog.component';
+import {PageService} from '../services/page.service';
 
 @Component({
   selector: 'app-user',
@@ -14,7 +15,7 @@ export class UserComponent implements OnInit {
 
   public client: IClientData = <IClientData>{};
 
-  constructor(private route: ActivatedRoute, private api: ApiService, public dialog: MdDialog) {
+  constructor(private route: ActivatedRoute, private api: ApiService, private page: PageService, public dialog: MdDialog) {
   }
 
   ngOnInit() {
@@ -50,10 +51,14 @@ export class UserComponent implements OnInit {
         this.api.saveClient(newClientData).subscribe(
           res => {
             console.log(`post res:`, res);
+            this.page.showInfo('Client data updated!');
+            // TODO:
+            // this.refresh();
           },
-          // error => {
-          //   console.log(`error:`, error);
-          // }
+          error => {
+            console.log(`error:`, error);
+            this.page.error(`Can't save data :(`);
+          }
         );
       }
     });
