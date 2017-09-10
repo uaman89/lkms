@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {MdSnackBar} from '@angular/material';
 
 class PageBusyIndicator {
   private _color: 'primary' | 'accent' | 'warn';
@@ -18,10 +19,7 @@ class PageBusyIndicator {
   }
 
   constructor() {
-    this._mode = 'indeterminate';
-    this._color = 'warn';
-    this._isShow = false;
-
+    this.hide();
   }
 
   public onQuery(): void {
@@ -47,7 +45,16 @@ export class PageService {
 
   public busyIndicator: PageBusyIndicator = new PageBusyIndicator();
 
-  constructor() {
+  constructor(private _snackBar: MdSnackBar) {
   }
 
+  public snackBar(message, action?, duration?) {
+    const params = duration ? {duration} : null;
+    this._snackBar.open(message, action, params);
+  }
+
+  public error(message) {
+    this.busyIndicator.hide();
+    this.snackBar(message, 'cancel');
+  }
 }

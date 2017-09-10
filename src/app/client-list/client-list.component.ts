@@ -11,8 +11,9 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/mergeMap';
 import {MdDialog, MdPaginator} from '@angular/material';
 import {ClientDetailsDialogComponent} from '../client-details-dialog/client-details-dialog.component';
-import {genderList} from '../shared';
+import {genderList, IClientData} from '../shared';
 import {isNumber} from 'util';
+import {PageService} from '../services/page.service';
 
 @Component({
   selector: 'app-user-list',
@@ -33,14 +34,17 @@ export class UserListComponent implements OnInit {
   @ViewChild('genderSelect') genderSelect: ElementRef;
   @ViewChild(MdPaginator) paginator: MdPaginator;
 
-  constructor(private api: ApiService, public dialog: MdDialog) {
+  constructor(private api: ApiService, private page: PageService, public dialog: MdDialog) {
   }
 
   ngOnInit() {
 
     this.api.getClientsTotalCount().then(count => {
-      this.clientsTotalCount = count;
-      console.log(`clientsTotalCount:`, count);
+      // stupid hack to prevent stupid error msg
+      setTimeout(() => {
+        this.clientsTotalCount = count;
+        console.log(`clientsTotalCount:`, count);
+      }, 1);
     });
 
 
@@ -79,17 +83,22 @@ export class UserListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(newClientData => {
       console.log('The dialog was closed. result: ', newClientData);
       if (!!newClientData) {
-        this.api.saveClient(newClientData).subscribe(res => {
-          console.log(`post res:`, res);
-        });
+        this.api.saveClient(<IClientData>{}).subscribe(
+          res => {
+            console.log(`post res:`, res);
+            this.page.snackBar('New client created!', 'OK', 3000);
+          },
+          error => {
+            this.page.error(`Can't create client :(`);
+          });
       }
     });
   }
 
   public gotoPage(event) {
     console.log(`event:`, event);
-    const page = parseInt( event.target.value, 10 ) - 1;
-    console.log(`!page || !isNumber(page)`, page, !page , !isNumber(page));
+    const page = parseInt(event.target.value, 10) - 1;
+    console.log(`!page || !isNumber(page)`, page, !page, !isNumber(page));
     if (!page || !isNumber(page)) {
       return false;
     } else {

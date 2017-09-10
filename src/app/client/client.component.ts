@@ -51,13 +51,12 @@ export class UserComponent implements OnInit {
           res => {
             console.log(`post res:`, res);
           },
-          error => {
-            console.log(`error:`, error);
-          });
+          // error => {
+          //   console.log(`error:`, error);
+          // }
+        );
       }
     });
   }
 
-
 }
-

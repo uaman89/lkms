@@ -7,6 +7,7 @@ import {PageService} from './page.service';
 import {IClientData} from 'app/shared';
 
 const allowedParams = [
+  'id',
   'name',
   'gender',
   'birthYear',
@@ -90,6 +91,10 @@ export class ApiService {
     if (!!clientData.id) {
       // update exist user
       // but I don't know the right endpoind, so... it will be always error
+
+      // url = `${this.baseUrl}clients`;
+      // return this.http.post(url, body.toString(), {headers}).map((res) => {
+
       url = `${this.baseUrl}clients/${clientData.id}`;
       return this.http.put(url, body).map((res) => {
         this.page.busyIndicator.hide();
@@ -99,6 +104,7 @@ export class ApiService {
     } else {
       // create new user
       url = `${this.baseUrl}clients`;
+
       return this.http.post(url, body.toString(), {headers}).map((res) => {
         this.page.busyIndicator.hide();
         return res.json();
