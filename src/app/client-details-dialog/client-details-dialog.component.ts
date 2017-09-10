@@ -52,11 +52,11 @@ export class ClientDetailsDialogComponent implements OnInit {
         validateIsDate,
         Validators.required
       ]),
-      'address': new FormControl('', [
+      'address': new FormControl(this.details.address, [
         Validators.required,
         Validators.minLength(3)
       ]),
-      'gender': new FormControl('', [Validators.required])
+      'gender': new FormControl(this.details.gender, [Validators.required])
     });
   }
 
