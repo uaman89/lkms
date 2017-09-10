@@ -4,18 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/toPromise';
 import {PageService} from './page.service';
-
-interface IClientData {
-  name: string;
-  gender: string;
-  birthYear: number;
-  birthMonth: number;
-  birthDay: number;
-  phone: string;
-  email: string;
-  address: string;
-  description: string;
-}
+import {IClientData} from 'app/shared';
 
 const allowedParams = [
   'name',
@@ -67,11 +56,9 @@ export class ApiService {
     });
   } // end getClientList
 
-  public saveClient(clientData: IClientData) {
+  public saveClient(clientData: IClientData): Observable<any[]> {
 
     this.page.busyIndicator.onProcess();
-
-    const url = `${this.baseUrl}clients`;
 
     const body = new URLSearchParams();
 
@@ -97,13 +84,27 @@ export class ApiService {
     console.log(`body:`, body);
     // return Observable.throw('done');
     this.page.busyIndicator.onQuery();
-    return this.http.post(url, body.toString(), {headers}).map( (res) => {
-      this.page.busyIndicator.hide();
-      return res;
-    });
+
+    let url;
+
+    if (!!clientData.id) {
+      // update exist user
+      // but I don't know the right endpoind, so... it will be always error
+      url = `${this.baseUrl}clients/${clientData.id}`;
+      return this.http.put(url, body).map((res) => {
+        this.page.busyIndicator.hide();
+        return res.json();
+      });
+
+    } else {
+      // create new user
+      url = `${this.baseUrl}clients`;
+      return this.http.post(url, body.toString(), {headers}).map((res) => {
+        this.page.busyIndicator.hide();
+        return res.json();
+      });
+    }
   }// end saveClient
-
-
 
 
   // this is wrong:

@@ -112,6 +112,8 @@ export class ExampleDataSource extends DataSource<any> {
   set name(newValue: string) {
     console.log(`name!`);
     this._nameChange.next(newValue);
+    // reset paginator
+    this._paginator.pageIndex = 0;
   }
 
   private _genderChange = new BehaviorSubject('');

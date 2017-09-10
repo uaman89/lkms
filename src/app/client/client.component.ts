@@ -34,7 +34,7 @@ export class UserComponent implements OnInit {
           'address': clientData.address,
         };
 
-    }
+      }
     );
   }
 
@@ -47,9 +47,13 @@ export class UserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(newClientData => {
       console.log('The dialog was closed. result: ', newClientData);
       if (!!newClientData) {
-        this.api.saveClient(newClientData).subscribe(res => {
-          console.log(`post res:`, res);
-        });
+        this.api.saveClient(newClientData).subscribe(
+          res => {
+            console.log(`post res:`, res);
+          },
+          error => {
+            console.log(`error:`, error);
+          });
       }
     });
   }
