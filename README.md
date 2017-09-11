@@ -22,6 +22,7 @@ To use project test server
 
 ---
 ### (!) update client is not implemented, cause I didn't find such [APIs](https://docs.google.com/document/d/1JdaFEiObRiERYjaRGr_524w1GgbFwBiM6aRPOhnWuGo/edit) enpoint
+---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.3.
 
