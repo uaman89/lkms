@@ -1,18 +1,19 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ApiService} from '../services/api.service';
 import {Observable} from 'rxjs/Observable';
 import {DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/mergeMap';
 import {MdDialog, MdPaginator} from '@angular/material';
 import {ClientDetailsDialogComponent} from '../client-details-dialog/client-details-dialog.component';
 import {genderList} from '../shared';
 import {PageService} from '../services/page.service';
-import 'rxjs/add/operator/mergeMap';
 import {isNumber} from 'util';
 
 @Component({
@@ -20,7 +21,7 @@ import {isNumber} from 'util';
   templateUrl: './client-list.component.html',
   styleUrls: ['./client-list.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
 
 
   public dataSource: ExampleDataSource;
@@ -33,6 +34,8 @@ export class UserListComponent implements OnInit {
   @ViewChild('filter') filter: ElementRef;
   @ViewChild('genderSelect') genderSelect: ElementRef;
   @ViewChild(MdPaginator) paginator: MdPaginator;
+
+  private subsriptions: Subscription[] = [];
 
   constructor(private api: ApiService, private page: PageService, public dialog: MdDialog) {
   }
@@ -50,18 +53,20 @@ export class UserListComponent implements OnInit {
 
     this.dataSource = new ExampleDataSource(this.api, this.paginator);
 
-    Observable.fromEvent(this.filter.nativeElement, 'keyup')
-      .debounceTime(500)
-      .distinctUntilChanged()
-      .subscribe((e: Event) => {
-        if (!this.dataSource) {
-          return;
-        }
-        console.log(`e:`, e);
-        if (e['keyCode'] === 13) {
-          this.dataSource.name = this.filter.nativeElement.value;
-        }
-      });
+    this.subsriptions.push(
+      Observable.fromEvent(this.filter.nativeElement, 'keyup')
+        .debounceTime(500)
+        .distinctUntilChanged()
+        .subscribe((e: Event) => {
+          if (!this.dataSource) {
+            return;
+          }
+          console.log(`e:`, e);
+          if (e['keyCode'] === 13) {
+            this.dataSource.name = this.filter.nativeElement.value;
+          }
+        })
+    );
   }
 
   public applyNameFilter() {
@@ -78,19 +83,21 @@ export class UserListComponent implements OnInit {
       data: {dialogTitle: 'Add new client'}
     });
 
-    dialogRef.afterClosed().subscribe(newClientData => {
-      console.log('The dialog was closed. result: ', newClientData);
-      if (!!newClientData) {
-        this.api.saveClient(newClientData).subscribe(
-          res => {
-            console.log(`post res:`, res);
-            this.page.showInfo('New client created!');
-          },
-          error => {
-            this.page.error(`Can't create client :(`);
-          });
-      }
-    });
+    this.subsriptions.push(
+      dialogRef.afterClosed().subscribe(newClientData => {
+        console.log('The dialog was closed. result: ', newClientData);
+        if (!!newClientData) {
+          this.api.saveClient(newClientData).subscribe(
+            res => {
+              console.log(`post res:`, res);
+              this.page.showInfo('New client created!');
+            },
+            error => {
+              this.page.error(`Can't create client :(`);
+            });
+        }
+      })
+    );
   }
 
   public gotoPage(event) {
@@ -103,6 +110,10 @@ export class UserListComponent implements OnInit {
       this.paginator.pageIndex = page;
       this.paginator.nextPage();
     }
+  }
+
+  ngOnDestroy() {
+    this.subsriptions.forEach(s => s.unsubscribe());
   }
 
 }
@@ -180,12 +191,10 @@ export class ExampleDataSource extends DataSource<any> {
           return clients;
         });
       });
-  }
 
+  }
 
   disconnect() {
-    console.log(`disconnect!`);
   }
-
 }
 
