@@ -9,16 +9,13 @@
  
 1. Install Node.js
 
-2. `$ npm install`
+2. Run `$ npm install`
 
-3. Launch
+3. Run `$ npm run start:prod` to start a local server. Navigate to `http://localhost:4200/`.
+  
 
-To build project do 
-  `$ npm run build`    
-after execution the "dist" directory will appear, with files ready to upload onto your server.
-
-To use project test server
-  `$ npm run start:prod`
+To build the project run `$ npm run build`. After execution the **./dist** directory will appear, with files ready to upload onto your server.
+  
 
 ---
 ### (!) update client is not implemented, cause I didn't find such [APIs](https://docs.google.com/document/d/1JdaFEiObRiERYjaRGr_524w1GgbFwBiM6aRPOhnWuGo/edit) enpoint
